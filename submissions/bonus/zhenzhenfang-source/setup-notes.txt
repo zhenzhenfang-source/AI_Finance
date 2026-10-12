@@ -1,0 +1,4 @@
+Local environment debug notes:
+Due to Gemini API quota limits from education account, the LLM model cannot run locally.
+All project logic, configuration setup and workflow steps have been completed.
+The operation process is recorded in screen‑recording video for homework submission.
