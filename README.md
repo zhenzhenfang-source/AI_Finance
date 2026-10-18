@@ -4,6 +4,12 @@ Course materials for **MB / CSE 599 · AI Finance**. We don't just *study* block
 
 > **New here? Start with [`SETUP.md`](SETUP.md).** It takes ~20 minutes and works on macOS / Windows / Linux.
 
+> 🎬 **Concept videos (full-course companion):** short animated explainers that span the whole course — from what a smart contract even *is* (a vending machine), through DeFi, arbitrage and flash loans, autonomous agents, quant, and derivatives. One concept per video. Watch at **[aaron-recompile.github.io/AI_Finance/concept-videos](https://aaron-recompile.github.io/AI_Finance/concept-videos/)** (or see [`concept-videos/`](concept-videos/)) — rewatch as needed.
+
+> 🏗️ **Built from scratch:** nearly everything here was hand-built — a clickable **AMM, lending, farming, arbitrage and flash-loan** DeFi set, an on-chain **bot arena**, and **three exchanges on one engine** (spot CEX · perpetuals · prediction market), each with its own token. Try the live dApps and see the whole stack in **[`built-from-scratch/`](built-from-scratch/)**.
+
+> 📚 **Readings:** reading lists and pre-readings for each week — history, technical depth, and critical context, all linking to free sources. See **[`readings/`](readings/)**.
+
 ---
 
 ## Week 1 — On-Chain Foundations
@@ -18,6 +24,7 @@ Course materials for **MB / CSE 599 · AI Finance**. We don't just *study* block
 | 📚 **Reference pack (terms + cheatsheet)** | [`week-01/foundations-reference-pack.md`](week-01/foundations-reference-pack.md) |
 | 🎮 **Interactive demos** | [`week-01/demos/`](week-01/demos/) — open the `.html` files in a browser |
 | 💻 **Code** | [`week-01/code/`](week-01/code/) |
+| 🎬 **Concept video** | *A Contract = a Vending Machine* → [watch](https://aaron-recompile.github.io/AI_Finance/concept-videos/) |
 
 ### The code (Week 1)
 
@@ -50,6 +57,7 @@ The building blocks. Swap on an AMM, then supply/borrow on a lending market — 
 | 🎮 **Interactive dApps** | [`week-02/app/`](week-02/app/) — `v2.html` (AMM swap) · `lend.html` (lending) · `farm.html` (yield farming: mine & dump) |
 | 📊 **Visualizations** | [`week-02/viz/`](week-02/viz/) — AMM swap · lending & liquidation |
 | 💻 **Code** | [`week-02/code/`](week-02/code/) — `amm.py` · `lend.py` · `lend_demo.py`; Foundry: `amm-foundry` (SimpleAMM) · `lend-foundry` (SimpleLend) |
+| 🎬 **Concept videos** | *What is an AMM* · *Lending & Liquidation* · *Yield Farming* → [watch](https://aaron-recompile.github.io/AI_Finance/concept-videos/) |
 
 ---
 
@@ -65,6 +73,7 @@ Snap the legos together into arbitrage and flash loans — first **by hand**, th
 | 📊 **Visualizations** | [`week-03/viz/`](week-03/viz/) — flash loan · interest-rate arb · leveraged carry |
 | 🤖 **Bot lab (run it)** | [`week-03/code/lab-bot/`](week-03/code/lab-bot/) — 5 deterministic bots + a live dashboard. `pip install web3` then `./student_start.sh` (read-only, no wallet) and watch them detect on-chain opportunities the instant the market moves. |
 | 💻 **Contracts (Foundry)** | [`week-03/code/flashloan-foundry/`](week-03/code/flashloan-foundry/) — FlashLender + Arbitrageur + SimpleAMM |
+| 🎬 **Concept videos** | *What is Arbitrage* · *What is a Flash Loan* · *Bots vs Manual* → [watch](https://aaron-recompile.github.io/AI_Finance/concept-videos/) |
 
 ---
 
@@ -78,8 +87,50 @@ Your bots were a pair of **hands** you drove by hand. This week a **brain** runs
 | 💬 **Demo prompts** | [`week-04/prompts/jarvis-demo-prompts.md`](week-04/prompts/jarvis-demo-prompts.md) — what to say to the agent, organized by lego |
 | 🤖 **Example skills** | [`week-04/skills/`](week-04/skills/) — real `SKILL.md` recipes (swap · lend · flash-arb) + the `USER.md` standing-rules fence (sanitized) |
 | 📝 **Overview** | [`week-04/README.md`](week-04/README.md) |
+| 🎬 **Concept video** | *Brain and Hands (Program vs Agent)* → [watch](https://aaron-recompile.github.io/AI_Finance/concept-videos/) |
 
 Every money action **plans → waits for your `confirm` → executes → verifies on-chain → reports**. The LLM never sizes a trade, never signs, never sees the key.
+
+---
+
+## Week 5 — CEX: the Execution Layer (OKX + Alpaca) + Cash-and-Carry
+
+After building our own on-chain primitives, we drop to the **centralized execution layer**: how you actually talk to an exchange/broker over an API, and how a market-neutral **cash-and-carry** really pays once fees are counted. **Paper / demo money only; keys come from your env or the macOS keychain, never hard-coded.**
+
+| What | Where |
+|------|-------|
+| 🖥️ **Slides** | [`week-05/slides/AI_Finance_Week5_CEX.html`](week-05/slides/AI_Finance_Week5_CEX.html) — CEX vs DEX, order types, cash-and-carry |
+| 📝 **Overview** | [`week-05/README.md`](week-05/README.md) |
+| 💻 **Code** | [`week-05/code/`](week-05/code/) — `okx/` (connect · history · orders · websocket) · `strategies/` (`trend_follow` · `mean_reversion` · `cash_and_carry` · `carry_run`) · `alpaca/` (stocks, paper) · `jarvis-okx-carry/` (the agent running carry behind a gate) |
+| 🎬 **Concept videos** | *Common Quant Strategies* · *Quant Metrics 101* · *What is Cash-and-Carry* → [watch](https://aaron-recompile.github.io/AI_Finance/concept-videos/) |
+
+---
+
+## Week 6 — Derivatives: Perps on Hyperliquid (+ Polymarket)
+
+The agent stops trading the present and starts trading the **future**: funding on perpetuals, and the probability of an event. The code is the **Hyperliquid** half — read the on-chain order book and funding, place/cancel orders, replay a strategy honestly, run a two-leg **funding-carry** bot. **Hyperliquid testnet only; keys from local, gitignored files.** The prediction-market half ships as a minimal teaching skeleton.
+
+| What | Where |
+|------|-------|
+| 🖥️ **Slides** | [`week-06/slides/AI_Finance_Week6_Derivatives.html`](week-06/slides/AI_Finance_Week6_Derivatives.html) — perps · funding · prediction markets |
+| 📝 **Overview** | [`week-06/README.md`](week-06/README.md) |
+| 💻 **Code — Hyperliquid** | [`week-06/code/hyperliquid/`](week-06/code/hyperliquid/) — `book` · `funding` · `hl_read` · `hl_trade` · `hl_replay` · `hl_carry_bot` · `hl_agent` |
+| 💻 **Code — Polymarket** | [`week-06/code/polymarket/`](week-06/code/polymarket/) — minimal prediction-market skeleton (`prediction_market.py` · `demo.py`) |
+| 🎬 **Concept videos** | *What is a Perpetual* · *What is Hyperliquid* · *What is Polymarket* · *Futures & Options Basics* · *Obligation or Right* · *Three Anchors* → [watch](https://aaron-recompile.github.io/AI_Finance/concept-videos/) |
+
+---
+
+## Week 7 — x402 & Farcaster: Pay and Speak
+
+For six weeks the agent learned to **earn**. Week 7 adds the last two verbs — to **pay**, and to **speak**. An agent that earns, pays, and speaks is an **economic actor**, not just a tool. **Testnet / tiny amounts only; keys from env or a gitignored `.env`, never committed.**
+
+| What | Where |
+|------|-------|
+| 🖥️ **Slides** | [`week-07/slides/AI_Finance_Week7_x402_Farcaster.html`](week-07/slides/AI_Finance_Week7_x402_Farcaster.html) — Pay and Speak |
+| 📝 **Overview** | [`week-07/README.md`](week-07/README.md) |
+| 💻 **Pay — x402** | [`week-07/code/x402/`](week-07/code/x402/) — pay-per-call USDC on Base; `x402_agent.py` runs with no setup, behind a spend fence (per-call/daily cap + seller allowlist) |
+| 💬 **Speak — Farcaster** | [`week-07/code/farcaster/`](week-07/code/farcaster/) — post in public with `cast.py`; preview by default, `--yes` to send, every post human-gated |
+| 🎬 **Concept videos** | *What is x402* · *The Agent Economy* · *What is Farcaster* → [watch](https://aaron-recompile.github.io/AI_Finance/concept-videos/) |
 
 ---
 
